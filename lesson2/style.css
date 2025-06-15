@@ -1,0 +1,26 @@
+.listItemTitle {
+  /* background-color: red; */
+  /* color: white; */
+  width: 20%;
+  border: 1px solid #000000;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  /* cursor: pointer; */
+}
+
+a {
+  text-decoration: none;
+  text-transform: capitalize;
+}
+
+.btn {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
