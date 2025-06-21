@@ -33,26 +33,21 @@
   gap: 20px;
 }
 
-.navbar div {
-  height: 30%;
-  margin-block: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.navbar div a {
+.navbar a {
   text-decoration: none;
   color: white;
   font-size: larger;
   text-transform: uppercase;
-}
-
-.navbar div div {
-  height: 2px;
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 50%;
+  margin-block: auto;
+  border-bottom: solid 2px transparent;
   transition: all 0.2s;
 }
 
-.navbar div a:hover + div {
-  background-color: #e67e22;
+.navbar a:hover {
+  border-bottom: solid 2px #e67e22;
 }
