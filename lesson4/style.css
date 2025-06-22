@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: aqua;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+}
+
+.btn {
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.right {
+  display: flex;
+  gap: 10px;
+}
+.btn:hover {
+  background-color: #cf6d17;
+}
+
+p {
+  margin-top: 50px;
+}
