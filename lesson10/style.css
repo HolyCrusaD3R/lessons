@@ -1,0 +1,14 @@
+/* Calculator App 
+.container {
+  width: 200px;
+  padding: 4rem;
+  margin-top: 10rem;
+  margin-inline: auto;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+  gap: 1rem;
+} */
