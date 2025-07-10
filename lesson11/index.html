@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="formContainer">
+      <form id="form" novalidate>
+        <h1>Group Form</h1>
+        <div class="mainForm">
+          <div class="horizontalInputContainer">
+            <div class="inputContainer">
+              <label for="firstName">First name</label>
+              <input
+                type="text"
+                class="inputField"
+                name="firstName"
+                id="firstName"
+                placeholder="First name"
+              />
+            </div>
+            <div class="inputContainer">
+              <label for="lastName">Last name</label>
+              <input
+                type="text"
+                class="inputField"
+                name="lastName"
+                id="lastName"
+                placeholder="Last name"
+              />
+            </div>
+          </div>
+          <div class="inputContainer max-w">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              class="inputField"
+              name="email"
+              id="email"
+              placeholder="you@company.com"
+            />
+          </div>
+          <div class="inputContainer half-w">
+            <div id="checkboxFormContainer" class="inputContainer max-w">
+              <label for="email">Technologies</label>
+              <div class="checkBoxContainerRow">
+                <div class="checkBoxColumn">
+                  <div class="checkboxContainer">
+                    <input
+                      type="checkbox"
+                      id="html"
+                      name="technologies"
+                      value="html"
+                    />
+                    <label for="html">Html</label>
+                  </div>
+                  <div class="checkboxContainer">
+                    <input
+                      type="checkbox"
+                      id="css"
+                      name="technologies"
+                      value="css"
+                    />
+                    <label for="css">Css</label>
+                  </div>
+                  <div class="checkboxContainer">
+                    <input
+                      type="checkbox"
+                      id="js"
+                      name="technologies"
+                      value="javaScript"
+                    />
+                    <label for="js">JavaScript</label>
+                  </div>
+                </div>
+                <div class="checkBoxColumn">
+                  <div class="checkboxContainer">
+                    <input
+                      type="checkbox"
+                      id="reactjs"
+                      name="technologies"
+                      value="reactjs"
+                    />
+                    <label for="reactjs">ReactJS</label>
+                  </div>
+                  <div class="checkboxContainer">
+                    <input
+                      type="checkbox"
+                      id="figma"
+                      name="technologies"
+                      value="figma"
+                    />
+                    <label for="figma">Figma</label>
+                  </div>
+                  <div class="checkboxContainer">
+                    <input
+                      type="checkbox"
+                      id="github"
+                      name="technologies"
+                      value="github"
+                    />
+                    <label for="github">Github</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button id="submit" class="submitBtn">Submit</button>
+        </div>
+      </form>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

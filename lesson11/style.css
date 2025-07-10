@@ -1,0 +1,79 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.formContainer {
+  width: 40%;
+  margin: 50px auto;
+}
+
+#form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 40%;
+}
+
+.inputField {
+  padding: 16px;
+  border: none;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+
+.error {
+  border: 1px solid red;
+}
+
+.horizontalInputContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.max-w {
+  width: 100%;
+}
+
+.half-w {
+  width: 50%;
+}
+
+.mainForm {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.checkBoxContainerRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.checkBoxColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.submitBtn {
+  width: 100%;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding-block: 15px;
+}
+
+.submitBtn:hover {
+  cursor: pointer;
+}
