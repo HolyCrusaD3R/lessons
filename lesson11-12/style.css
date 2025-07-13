@@ -77,3 +77,23 @@
 .submitBtn:hover {
   cursor: pointer;
 }
+
+.hidden {
+  display: none;
+}
+
+.gameContainer {
+  width: 70vw;
+  margin: 40px auto;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}

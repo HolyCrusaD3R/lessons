@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="formContainer">
+    <div class="formContainer" id="pageOne">
       <form id="form" novalidate>
         <h1>Group Form</h1>
         <div class="mainForm">
@@ -41,6 +41,16 @@
               name="email"
               id="email"
               placeholder="you@company.com"
+            />
+          </div>
+          <div class="inputContainer max-w">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="inputField"
+              name="password"
+              id="password"
+              placeholder="Enter your password"
             />
           </div>
           <div class="inputContainer half-w">
@@ -111,6 +121,33 @@
           <button id="submit" class="submitBtn">Submit</button>
         </div>
       </form>
+    </div>
+    <div class="hidden" id="pageTwo">
+      <div class="gameContainer">
+        <input
+          type="text"
+          class="inputField"
+          id="numberField"
+          placeholder="Enter your guess"
+        />
+        <div class="btnContainer">
+          <button class="btnRed" id="btnGuess">Guess</button>
+          <button class="btnRed" id="btnRestart">Restart</button>
+        </div>
+        <div>
+          <div class="flex flex-row">
+            <p>Score:</p>
+            <p id="score"></p>
+          </div>
+        </div>
+        <div>
+          <div class="flex flex-row">
+            <p>Attempts:</p>
+            <p id="attempts"></p>
+            <p>/ 10</p>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="script.js"></script>
   </body>
