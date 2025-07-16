@@ -22,12 +22,14 @@ const btnRestart = document.getElementById("btnRestart");
 
 const scoreEl = document.getElementById("score");
 const attemptsEl = document.getElementById("attempts");
+const history = document.getElementById("history");
+
 let secretNumber;
 let score = 0;
 let attempts = 0;
 scoreEl.textContent = score;
 attemptsEl.textContent = attempts;
-// startGame(); // REMOVE AFTER
+startGame(); // REMOVE AFTER
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   clearErrors();
@@ -150,38 +152,77 @@ function clearErrors() {
   }
 }
 
+const feedbackEl = document.createElement("div");
+feedbackEl.id = "guessFeedback";
+feedbackEl.style.marginTop = "16px";
+feedbackEl.style.fontWeight = "bold";
+feedbackEl.textContent = "ცარიელი";
+feedbackEl.style.opacity = "0";
+numberInput.parentNode.insertBefore(feedbackEl, numberInput.nextSibling);
+
+function showGuessError(message) {
+  numberInput.classList.add("error");
+  feedbackEl.textContent = message;
+  feedbackEl.style.color = "red";
+  feedbackEl.style.opacity = "1";
+}
+
+function showGuessFeedback(message, color = "black") {
+  numberInput.classList.remove("error");
+  feedbackEl.textContent = message;
+  feedbackEl.style.color = color;
+  feedbackEl.style.opacity = "1";
+}
+
+function clearGuessError() {
+  numberInput.classList.remove("error");
+  feedbackEl.textContent = "ცარიელი";
+  feedbackEl.style.opacity = "0";
+}
+
 function guessNumber() {
-  const isValidFormat = /^[0-9]+$/.test(numberInput.value);
-  if (!isValidFormat) {
-    console.log("format not valid");
+  clearGuessError();
+  const val = numberInput.value.trim();
+  if (!/^[0-9]+$/.test(val)) {
+    showGuessError("შეიყვანე მხოლოდ რიცხვი");
     return;
   }
-  const currGuess = parseInt(numberInput.value);
+  const currGuess = parseInt(val);
   if (currGuess > 100 || currGuess <= 0) {
-    console.log("number must be between 1 and 100");
+    showGuessError("რიცხვი უნდა იყოს 1-დან 100-მდე");
     return;
   }
+  attempts++;
+  updateDisplay();
   if (currGuess === secretNumber) {
-    console.log("You have guessed the secret number");
     score++;
+    showGuessFeedback("გილოცავ, გამოიცანი!", "green");
+    addHistory(0, currGuess);
     attempts = 0;
     updateSecretNumber();
     updateDisplay();
     return;
   }
-  attempts++;
-  updateDisplay();
-  if (checkAttempts()) {
-    return;
-  }
+  if (checkAttempts()) return;
   if (currGuess > secretNumber) {
-    console.log("number is larger");
+    showGuessFeedback("მეტია", "blue");
+    addHistory(1, currGuess);
     return;
   }
   if (currGuess < secretNumber) {
-    console.log("number is smaller");
+    showGuessFeedback("ნაკლებია", "orange");
+    addHistory(-1, currGuess);
     return;
   }
+}
+
+function addHistory(diviation, guess) {
+  const historyLi = document.createElement("li");
+  historyLi.innerHTML = `You guessed <p style="color: blue;">${guess}</p> which is ${
+    diviation === 0 ? "correct" : diviation === 1 ? "too high" : "too low"
+  }`;
+  historyLi.classList.add("flex", "flex-row", "gap-3", "historyListItem");
+  history.prepend(historyLi);
 }
 
 function updateDisplay() {
@@ -207,7 +248,17 @@ function restart() {
   attempts = 0;
   updateDisplay();
   updateSecretNumber();
+  clearGuessError();
+  clearHistory();
+}
+
+function clearHistory() {
+  const historyListItems = document.getElementsByClassName("historyListItem");
+  for (let i = historyListItems.length - 1; i >= 0; i--) {
+    historyListItems[i].remove();
+  }
 }
 
 btnRestart.addEventListener("click", restart);
 btnGuess.addEventListener("click", guessNumber);
+numberInput.addEventListener("input", clearGuessError);
