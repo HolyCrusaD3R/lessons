@@ -20,16 +20,54 @@ const numberInput = document.getElementById("numberField");
 const btnGuess = document.getElementById("btnGuess");
 const btnRestart = document.getElementById("btnRestart");
 
-const scoreEl = document.getElementById("score");
-const attemptsEl = document.getElementById("attempts");
+const playerScore = document.getElementById("playerScore");
+const compScore = document.getElementById("compScore");
 const history = document.getElementById("history");
 
+const rockBtn = document.getElementById("rock");
+const paperBtn = document.getElementById("paper");
+const scissorsBtn = document.getElementById("scissors");
+
+let arr = ["rock", "paper", "scissors"];
 let secretNumber;
-let score = 0;
-let attempts = 0;
-scoreEl.textContent = score;
-attemptsEl.textContent = attempts;
+let playerScoreCurr = 0;
+let compScoreCurr = 0;
+playerScore.textContent = playerScoreCurr;
+compScore.textContent = compScoreCurr;
 startGame(); // REMOVE AFTER
+
+rockBtn.addEventListener("click", () => pick(0));
+paperBtn.addEventListener("click", () => pick(1));
+scissorsBtn.addEventListener("click", () => pick(2));
+
+function pick(index) {
+  secretNumber = Math.floor(Math.random() * 3);
+  console.log(index, secretNumber);
+  if (index === (secretNumber + 1) % 3) {
+    console.log(`you chose ${arr[index]} and defeated ${arr[secretNumber]}`);
+    playerScoreCurr++;
+    updateDisplay();
+    return;
+  }
+  if ((index + 1) % 3 === secretNumber) {
+    console.log(
+      `you chose ${arr[index]} and were defeated by ${arr[secretNumber]}`
+    );
+    compScoreCurr++;
+    updateDisplay();
+    return;
+  }
+  if (index === secretNumber) {
+    console.log(`you both chose ${arr[index]}, it is a draw`);
+    return;
+  }
+}
+
+function updateDisplay() {
+  playerScore.textContent = playerScoreCurr;
+  compScore.textContent = compScoreCurr;
+}
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   clearErrors();
@@ -46,7 +84,6 @@ form.addEventListener("submit", (e) => {
 
 function startGame() {
   page1.classList.add("hidden");
-  updateSecretNumber();
   page2.classList.remove("hidden");
 }
 
@@ -151,114 +188,3 @@ function clearErrors() {
     inputsWithErrorBorder[i].classList.remove("error");
   }
 }
-
-const feedbackEl = document.createElement("div");
-feedbackEl.id = "guessFeedback";
-feedbackEl.style.marginTop = "16px";
-feedbackEl.style.fontWeight = "bold";
-feedbackEl.textContent = "ცარიელი";
-feedbackEl.style.opacity = "0";
-numberInput.parentNode.insertBefore(feedbackEl, numberInput.nextSibling);
-
-function showGuessError(message) {
-  numberInput.classList.add("error");
-  feedbackEl.textContent = message;
-  feedbackEl.style.color = "red";
-  feedbackEl.style.opacity = "1";
-}
-
-function showGuessFeedback(message, color = "black") {
-  numberInput.classList.remove("error");
-  feedbackEl.textContent = message;
-  feedbackEl.style.color = color;
-  feedbackEl.style.opacity = "1";
-}
-
-function clearGuessError() {
-  numberInput.classList.remove("error");
-  feedbackEl.textContent = "ცარიელი";
-  feedbackEl.style.opacity = "0";
-}
-
-function guessNumber() {
-  clearGuessError();
-  const val = numberInput.value.trim();
-  if (!/^[0-9]+$/.test(val)) {
-    showGuessError("შეიყვანე მხოლოდ რიცხვი");
-    return;
-  }
-  const currGuess = parseInt(val);
-  if (currGuess > 100 || currGuess <= 0) {
-    showGuessError("რიცხვი უნდა იყოს 1-დან 100-მდე");
-    return;
-  }
-  attempts++;
-  updateDisplay();
-  if (currGuess === secretNumber) {
-    score++;
-    showGuessFeedback("გილოცავ, გამოიცანი!", "green");
-    addHistory(0, currGuess);
-    attempts = 0;
-    updateSecretNumber();
-    updateDisplay();
-    return;
-  }
-  if (checkAttempts()) return;
-  if (currGuess > secretNumber) {
-    showGuessFeedback("მეტია", "blue");
-    addHistory(1, currGuess);
-    return;
-  }
-  if (currGuess < secretNumber) {
-    showGuessFeedback("ნაკლებია", "orange");
-    addHistory(-1, currGuess);
-    return;
-  }
-}
-
-function addHistory(diviation, guess) {
-  const historyLi = document.createElement("li");
-  historyLi.innerHTML = `You guessed <p style="color: blue;">${guess}</p> which is ${
-    diviation === 0 ? "correct" : diviation === 1 ? "too high" : "too low"
-  }`;
-  historyLi.classList.add("flex", "flex-row", "gap-3", "historyListItem");
-  history.prepend(historyLi);
-}
-
-function updateDisplay() {
-  scoreEl.textContent = score;
-  attemptsEl.textContent = attempts;
-}
-
-function updateSecretNumber() {
-  secretNumber = Math.floor(Math.random() * 100) + 1;
-}
-
-function checkAttempts() {
-  if (attempts === 10) {
-    btnGuess.disabled = true;
-    return true;
-  }
-  return false;
-}
-
-function restart() {
-  btnGuess.disabled = false;
-  score = 0;
-  attempts = 0;
-  updateDisplay();
-  updateSecretNumber();
-  clearGuessError();
-  clearHistory();
-}
-
-function clearHistory() {
-  const historyListItems = document.getElementsByClassName("historyListItem");
-  for (let i = historyListItems.length - 1; i >= 0; i--) {
-    historyListItems[i].remove();
-  }
-}
-
-btnRestart.addEventListener("click", restart);
-btnGuess.addEventListener("click", guessNumber);
-numberInput.addEventListener("input", clearGuessError);
