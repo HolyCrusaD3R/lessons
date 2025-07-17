@@ -28,6 +28,9 @@ const rockBtn = document.getElementById("rock");
 const paperBtn = document.getElementById("paper");
 const scissorsBtn = document.getElementById("scissors");
 
+const playerOneChoice = document.getElementById("playerOneChoice");
+const playerTwoChoice = document.getElementById("playerTwoChoice");
+
 let arr = ["rock", "paper", "scissors"];
 let secretNumber;
 let playerScoreCurr = 0;
@@ -36,15 +39,52 @@ playerScore.textContent = playerScoreCurr;
 compScore.textContent = compScoreCurr;
 startGame(); // REMOVE AFTER
 
+btnRestart.addEventListener("click", restart);
+function restart() {
+  clearHistory();
+  resetScores();
+  deleteImages();
+}
+function resetScores() {
+  playerScoreCurr = 0;
+  compScoreCurr = 0;
+  updateDisplay();
+}
+
 rockBtn.addEventListener("click", () => pick(0));
 paperBtn.addEventListener("click", () => pick(1));
 scissorsBtn.addEventListener("click", () => pick(2));
 
+function showChoices(playerChoice, compChoice) {
+  deleteImages();
+  addImageToParent(playerOneChoice, playerChoice);
+  addImageToParent(playerTwoChoice, compChoice);
+}
+
+function addImageToParent(node, choice) {
+  const img = document.createElement("img");
+  img.src = `./assets/${arr[choice]}.png`;
+  node.append(img);
+}
+
+function deleteImages() {
+  removeChildren(playerOneChoice);
+  removeChildren(playerTwoChoice);
+}
+
+function removeChildren(node) {
+  for (let i = node.children.length - 1; i >= 0; i--) {
+    node.children[i].remove();
+  }
+}
+
 function pick(index) {
   secretNumber = Math.floor(Math.random() * 3);
   console.log(index, secretNumber);
+  showChoices(index, secretNumber);
   if (index === (secretNumber + 1) % 3) {
     console.log(`you chose ${arr[index]} and defeated ${arr[secretNumber]}`);
+    addHistory(arr[index], arr[secretNumber], "Win");
     playerScoreCurr++;
     updateDisplay();
     return;
@@ -53,12 +93,14 @@ function pick(index) {
     console.log(
       `you chose ${arr[index]} and were defeated by ${arr[secretNumber]}`
     );
+    addHistory(arr[index], arr[secretNumber], "Lose");
     compScoreCurr++;
     updateDisplay();
     return;
   }
   if (index === secretNumber) {
     console.log(`you both chose ${arr[index]}, it is a draw`);
+    addHistory(arr[index], arr[secretNumber], "Draw");
     return;
   }
 }
@@ -186,5 +228,19 @@ function clearErrors() {
   const inputsWithErrorBorder = document.querySelectorAll(".error");
   for (let i = inputsWithErrorBorder.length - 1; i >= 0; i--) {
     inputsWithErrorBorder[i].classList.remove("error");
+  }
+}
+
+function addHistory(playerPick, compPick, result) {
+  const historyLi = document.createElement("li");
+  historyLi.innerHTML = `You picked <p style=\"color: blue;\">${playerPick}</p> vs <p style=\"color: red;\">${compPick}</p> — <b>${result}</b>`;
+  historyLi.classList.add("flex", "flex-row", "gap-3", "historyListItem");
+  history.prepend(historyLi);
+}
+
+function clearHistory() {
+  const historyListItems = document.getElementsByClassName("historyListItem");
+  for (let i = historyListItems.length - 1; i >= 0; i--) {
+    historyListItems[i].remove();
   }
 }
